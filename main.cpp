@@ -28,7 +28,7 @@ int main()
 		cameraControl.updateInput(dt);
 
 		// Render
-		window.clear();
+		window.clear(sf::Color::White);
 
 		// Render game
         window.setView(cameraControl.getView());
