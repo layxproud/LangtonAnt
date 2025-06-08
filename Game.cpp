@@ -37,38 +37,22 @@ Game::~Game()
 
 void Game::render(float currentZoom)
 {
-	m_viewCenter = { m_window.getView().getCenter() };
+	m_viewCenter = m_window.getView().getCenter();
+	sf::Vector2f viewSize = m_window.getView().getSize();
 
-	fromX = m_viewCenter.x / Cell::cellSizeF - 10;
-	toX = m_viewCenter.x / Cell::cellSizeF + 10;
-	fromY = m_viewCenter.y / Cell::cellSizeF - 6;
-	toY = m_viewCenter.y / Cell::cellSizeF + 6;
+	int halfVisibleCellsX = static_cast<int>((viewSize.x / Cell::cellSizeF) / 2.f) + 2;
+	int halfVisibleCellsY = static_cast<int>((viewSize.y / Cell::cellSizeF) / 2.f) + 2;
 
-	if (fromX < 0) {
-		fromX = 0;
-	} else if (fromX >= mapSize) {
-		fromX = mapSize - 1;
-	}
+	fromX = static_cast<int>(m_viewCenter.x / Cell::cellSizeF) - halfVisibleCellsX;
+	toX = static_cast<int>(m_viewCenter.x / Cell::cellSizeF) + halfVisibleCellsX;
+	fromY = static_cast<int>(m_viewCenter.y / Cell::cellSizeF) - halfVisibleCellsY;
+	toY = static_cast<int>(m_viewCenter.y / Cell::cellSizeF) + halfVisibleCellsY;
 
-	if (toX < 0) {
-		toX = 0;
-	} else if (toX >= mapSize) {
-		toX = mapSize - 1;
-	}
+	fromX = std::max(0, fromX);
+	toX = std::min(static_cast<int>(mapSize) - 1, toX);
+	fromY = std::max(0, fromY);
+	toY = std::min(static_cast<int>(mapSize) - 1, toY);
 
-	if (fromY < 0) {
-		fromY = 0;
-	} else if (fromY >= mapSize) {
-		fromY = mapSize - 1;
-	}
-
-	if (toY < 0) {
-		toY = 0;
-	} else if (toY >= mapSize) {
-		toY = mapSize - 1;
-	}
-
-	// Draw only visible cells
 	isAntDrawn = false;
 	for (size_t x = fromX; x < toX; x++) {
 		for (size_t y = fromY; y < toY; y++) {
@@ -76,7 +60,6 @@ void Game::render(float currentZoom)
 
 			cell.setOutlineThickness(currentZoom);
 
-			// Fill color based on visited state
 			if (cell.isVisited()) {
 				cell.setFillColor(Cell::Gray);  // Visited (gray)
 			}
@@ -84,7 +67,6 @@ void Game::render(float currentZoom)
 				cell.setFillColor(sf::Color::White);  // Not visited (white)
 			}
 
-			// Ant rendering
 			if (!isAntDrawn && cell.getPosition() == ant.getPosition()) {
 				cell.setFillColor(sf::Color::Red);
 				isAntDrawn = true;
@@ -113,10 +95,7 @@ void Game::update(float dt)
 
 	bool wasVisited = cell.isVisited();
 	cell.changeCellStatus();
-	std::cout << cell.isVisited() << std::endl;
 
 	ant.turn(wasVisited);
 	ant.moveForward();
-
-	// std::cout << ant.getPosition().x << ";" << ant.getPosition().y << std::endl;
 }
