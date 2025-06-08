@@ -13,7 +13,7 @@ public:
 	void render(float currentZoom);
 	void update(float dt);
 
-	static constexpr int mapSize{ 1000 };
+	static constexpr int mapSize{ 5 };
 	static constexpr sf::Vector2f winSizeF{ 800.f, 600.f };
 	static constexpr sf::Vector2u winSizeU{ 800, 600 };
 

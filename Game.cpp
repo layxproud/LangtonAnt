@@ -29,6 +29,7 @@ Game::Game(sf::RenderWindow& window)
 	// Init ant
 	ant.setPosition({ (mapSize - 1) / 2 * Cell::cellSizeF,
 		(mapSize - 1) / 2 * Cell::cellSizeF }); // Middle of the map
+	ant.setMapSize(mapSize - 1);
 }
 
 Game::~Game()

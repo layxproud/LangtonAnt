@@ -13,7 +13,7 @@ public:
 	void changeCellStatus() { cellStatus = !cellStatus; }
 	bool isVisited() const { return cellStatus; }
 
-protected:
+private:
 	bool cellStatus;
 };
 
