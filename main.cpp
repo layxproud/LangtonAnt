@@ -6,7 +6,7 @@ int main()
 	float dt{ 0.f };
 	sf::Clock dtClock;
 
-	sf::RenderWindow window(sf::VideoMode({ 1920, 1080 }), "Langtons Ant");
+	sf::RenderWindow window(sf::VideoMode(Game::winSizeU), "Langtons Ant");
 	window.setFramerateLimit(120);
 
 	Game game(window);
@@ -26,6 +26,8 @@ int main()
         // Update
         // Update camera
 		cameraControl.updateInput(dt);
+		// Update game
+		game.update(dt);
 
 		// Render
 		window.clear(sf::Color::White);

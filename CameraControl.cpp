@@ -6,9 +6,9 @@ CameraControl::CameraControl(const Game& game)
     , zoomFactor{ 0.1f }
     , canZoom{ true }
 {
-    view.setSize({ 1920.f, 1080.f });
-    view.setCenter({ game.getMapSize() * game.getTileSizeF() / 2.f,
-        game.getMapSize() * game.getTileSizeF() / 2.f });
+    view.setSize(Game::winSizeF);
+    view.setCenter({ Game::mapSize * Cell::cellSizeF / 2.f,
+        Game::mapSize * Cell::cellSizeF / 2.f });
 }
 
 void CameraControl::updateInput(float dt)

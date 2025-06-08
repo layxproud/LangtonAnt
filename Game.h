@@ -1,27 +1,26 @@
 #pragma once
 #include "Ant.h"
+#include "Cell.h"
 #include <SFML/Graphics.hpp>
 #include <vector>
 
 class Game
 {
-	const int mapSize{ 20 };
-	const float tileSizeF{ 100.f };
-	const unsigned tileSizeU = static_cast<unsigned>(tileSizeF);
-
 public:
 	Game(sf::RenderWindow& window);
 	~Game();
 
 	void render(float currentZoom);
+	void update(float dt);
 
-	int getMapSize() const { return mapSize; }
-	float getTileSizeF() const { return tileSizeF; }
+	static constexpr int mapSize{ 20 };
+	static constexpr sf::Vector2f winSizeF{ 800.f, 600.f };
+	static constexpr sf::Vector2u winSizeU{ 800, 600 };
 
 private:
 	sf::RenderWindow& m_window;
-	std::vector<std::vector<sf::RectangleShape>> tileMap;
-	sf::Vector2f viewCenter;
+	std::vector<std::vector<Cell>> m_tileMap;
+	sf::Vector2f m_viewCenter;
 
 	int fromX;
 	int toX;
@@ -29,6 +28,9 @@ private:
 	int toY;
 
 	Ant ant;
-	bool isAntInitialized;
+	bool isAntDrawn;
+
+	float moveTimer;
+	float moveDelay;
 };
 

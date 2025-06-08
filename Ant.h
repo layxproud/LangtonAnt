@@ -1,11 +1,23 @@
 #pragma once
-#include <SFML/Graphics/RectangleShape.hpp>
+#include "Cell.h"
 
-class Ant : public sf::RectangleShape
+enum class AntDirection
+{
+	North,
+	West,
+	South,
+	East
+};
+
+class Ant : public Cell
 {
 public:
 	Ant();
 
+	void turn(bool clockwise);
+	void moveForward();
+
 private:
+	AntDirection currentDirection;
 };
 
